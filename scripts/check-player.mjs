@@ -47,6 +47,7 @@ function player(title) {
   return { video, button, error, status, fullscreen };
 }
 const a = player('Agent Hunt'), b = player('Battle Gears');
+a.video.readyState = 1; // Metadata may be the only data preloaded before play.
 const document = new Element();
 document.fullscreenEnabled = true;
 document.querySelectorAll = selector => selector === '.video-trigger' ? [a.button, b.button] : [a.video, b.video];
@@ -55,6 +56,10 @@ vm.runInNewContext(ts.transpileModule(source, { compilerOptions: { target: ts.Sc
 assert.equal(a.video.volume, 0.5);
 assert.equal(a.video.controls, false);
 assert.equal(a.button.hidden, false);
+assert.equal(a.status.hidden, true, 'Metadata-only preload must not show perpetual loading before play');
+await a.video.emit('loadstart');
+await a.video.emit('stalled');
+assert.equal(a.status.hidden, true, 'Background preload must not look like pending playback');
 
 a.video.mode = 'reject';
 await a.button.emit('click');
@@ -77,6 +82,8 @@ b.video.pause();
 b.video.mode = 'pending';
 const pending = b.button.emit('click');
 assert.equal(b.status.hidden, false);
+await b.video.emit('loadstart');
+assert.equal(b.status.hidden, false, 'Playback loading must remain visible');
 await b.button.emit('click');
 await pending;
 assert.equal(b.error.hidden, true, 'Cancelling an in-flight play must not show an error');

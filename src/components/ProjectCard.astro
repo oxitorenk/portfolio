@@ -112,7 +112,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '') +
       document.querySelectorAll('video').forEach(other => { if (other !== video) other.pause(); });
       update();
     });
-    video.addEventListener('loadstart', () => { if (error.hidden) setLoading(true); });
+    video.addEventListener('loadstart', () => { if (error.hidden && (starting || !video.paused)) setLoading(true); });
     video.addEventListener('loadeddata', () => setLoading(false));
     video.addEventListener('canplay', () => setLoading(false));
     video.addEventListener('playing', () => { error.hidden = true; playFailed = false; setLoading(false); update(); });
@@ -122,6 +122,5 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '') +
     ['pause', 'ended'].forEach(event => video.addEventListener(event, () => { setLoading(false); update(); }));
     video.addEventListener('error', () => showPlaybackError('Video could not load. Check your connection and press play to retry.'));
     if (video.error) showPlaybackError('Video could not load. Check your connection and press play to retry.');
-    else if (video.readyState < 2) setLoading(true);
   });
 </script>
