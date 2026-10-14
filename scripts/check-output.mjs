@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+const html = readFileSync('dist/index.html', 'utf8');
+const base = (process.env.BASE_PATH || '/').replace(/\/$/, '');
+assert.equal((html.match(/<article\b/g) || []).length, 6, 'All six projects must be rendered');
+assert.equal((html.match(/class="video-trigger"/g) || []).length, 6, 'Every gameplay video must have a trigger');
+assert.equal((html.match(/class="fullscreen-trigger"/g) || []).length, 6, 'Every video must offer fullscreen');
+assert.equal((html.match(/<video\b[^>]*\bcontrols(?:\s|=|>)/g) || []).length, 6, 'All videos must work with native controls when JavaScript is unavailable');
+assert(!html.includes('volume-control'), 'Inline videos must not show a custom volume slider');
+assert(!html.includes('Link coming soon'), 'Missing store links must be omitted');
+assert(!html.includes('<dialog'), 'Video must play in the card without a dialog');
+assert.equal((html.match(/<video\b/g) || []).length, 6, 'Each card must have an inline player');
+assert.equal((html.match(/preload="metadata"/g) || []).length, 6, 'Every video must load its initial frame');
+assert(!html.includes('placeholder artwork'), 'Video cards must not show placeholder artwork');
+assert.equal((html.match(/class="contribution"/g) || []).length, 6, 'All projects must show supplied contributions');
+assert(html.replace(/<[^>]+>/g, '').includes('Game Developer &amp; Game Designer'), 'Battle Gears must show both roles');
+assert.equal((html.match(/class="project-heading featured-heading"/g) || []).length, 2, 'Featured cards must identify games above the video');
+assert(html.includes('id="contact-title"'), 'Portfolio must offer contact at the end');
+assert(!html.includes('Metrics coming soon'), 'Both featured releases have supplied metrics');
+assert(html.includes('50M+'), 'Frontline Heroes must display the supplied download count');
+assert(html.includes('100M+'), 'Agent Hunt must display the supplied download count');
+assert(!/href="(?:#|https?:\/\/example\.)"/.test(html), 'No dummy destinations');
+for (const match of html.matchAll(/(?:src|href|data-video)="([^"]+)"/g)) {
+  const path = match[1];
+  if (path.startsWith('#') || /^(https?:|mailto:)/.test(path)) continue;
+  assert(path.startsWith(`${base}/`), `Asset must respect the deployment base: ${path}`);
+  assert(existsSync(join('dist', path.slice(base.length))), `Missing asset: ${path}`);
+}
+console.log('Static output checks passed: six projects, valid assets, no fake destinations.');

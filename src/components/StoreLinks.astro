@@ -1,0 +1,14 @@
+---
+interface Props { appStore?: string; googlePlay?: string }
+const { appStore, googlePlay } = Astro.props;
+const links = [[appStore, 'App Store'], [googlePlay, 'Google Play']].filter(([url]) => url);
+---
+{links.length > 0 && <div class="store-links">
+  {links.map(([url, label]) => <a href={url} target="_blank" rel="noopener noreferrer">
+    <svg class:list={['store-icon', { play: label === 'Google Play' }]} viewBox="0 0 24 24" aria-hidden="true">
+      {label === 'App Store' ? <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" /><path d="M8 17L14 7M10 7L16 17M6 14H18" /></g> : <path d="M5 3L21 12L5 21Z" fill="currentColor" />}
+    </svg>
+    {label}
+    <svg class="external-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12L12 4M4 4H12V12" /></svg>
+  </a>)}
+</div>}

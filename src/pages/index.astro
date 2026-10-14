@@ -1,0 +1,39 @@
+---
+import { profile, projects } from '../data/projects';
+import ProjectCard from '../components/ProjectCard.astro';
+import '../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oğuzhan Akbulut — Game Developer</title>
+  <meta name="description" content={profile.description} />
+  <meta property="og:title" content="Oğuzhan Akbulut — Designing & Building Games" />
+  <meta property="og:description" content={profile.description} />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, '') + '/'}favicon.svg`} type="image/svg+xml" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="identity"><span class="name">{profile.name}</span><span class="job">{profile.role}</span></div>
+      <nav aria-label="Social links">{[[profile.github, 'GitHub'], [profile.linkedin, 'LinkedIn'], [profile.email ? `mailto:${profile.email}` : '', 'Contact']].map(([url,label]) => url ? <a href={url}>{label} <span aria-hidden="true">↗</span></a> : <span class="social-placeholder" title="Link coming soon">{label} <span aria-hidden="true">↗</span><small>Coming soon</small></span>)}</nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title"><h1 id="hero-title">Designing &amp;<br />Building Games</h1><p>{profile.description}</p></section>
+      <section class="releases" aria-labelledby="releases-title"><h2 class="section-title" id="releases-title">Selected Releases</h2><div class="featured-list">{projects.filter(p=>p.featured).map(project=><ProjectCard project={project} />)}</div></section>
+      <section class="more-projects" aria-labelledby="projects-title"><h2 class="section-title" id="projects-title">More Projects</h2><div class="project-grid">{projects.filter(p=>!p.featured).map(project=><ProjectCard project={project} />)}</div></section>
+    </main>
+    <footer>
+      <p class="disclaimer">Game titles and final key art belong to their publishers.</p>
+      <section class="contact-section" aria-labelledby="contact-title">
+        <h2 id="contact-title">Let’s talk.</h2>
+        <a href={`mailto:${profile.email}`}>{profile.email}<span aria-hidden="true"> ↗</span></a>
+      </section>
+    </footer>
+  </div>
+</body>
+</html>
