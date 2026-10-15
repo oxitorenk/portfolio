@@ -11,7 +11,9 @@ assert(!html.includes('volume-control'), 'Inline videos must not show a custom v
 assert(!html.includes('Link coming soon'), 'Missing store links must be omitted');
 assert(!html.includes('<dialog'), 'Video must play in the card without a dialog');
 assert.equal((html.match(/<video\b/g) || []).length, 6, 'Each card must have an inline player');
-assert.equal((html.match(/preload="metadata"/g) || []).length, 6, 'Every video must load its initial frame');
+assert.equal((html.match(/preload="auto"/g) || []).length, 6, 'Every video must request preloading');
+assert.equal((html.match(/<video\b[^>]*\bposter="/g) || []).length, 6, 'Each video must have a gameplay poster before playback');
+assert(!html.includes('↗'), 'Navigation arrows must not render as platform emoji');
 assert(!html.includes('placeholder artwork'), 'Video cards must not show placeholder artwork');
 assert.equal((html.match(/class="contribution"/g) || []).length, 6, 'All projects must show supplied contributions');
 assert(html.replace(/<[^>]+>/g, '').includes('Game Developer &amp; Game Designer'), 'Battle Gears must show both roles');
@@ -21,7 +23,7 @@ assert(!html.includes('Metrics coming soon'), 'Both featured releases have suppl
 assert(html.includes('50M+'), 'Frontline Heroes must display the supplied download count');
 assert(html.includes('100M+'), 'Agent Hunt must display the supplied download count');
 assert(!/href="(?:#|https?:\/\/example\.)"/.test(html), 'No dummy destinations');
-for (const match of html.matchAll(/(?:src|href|data-video)="([^"]+)"/g)) {
+for (const match of html.matchAll(/(?:src|href|data-video|poster)="([^"]+)"/g)) {
   const path = match[1];
   if (path.startsWith('#') || /^(https?:|mailto:)/.test(path)) continue;
   assert(path.startsWith(`${base}/`), `Asset must respect the deployment base: ${path}`);

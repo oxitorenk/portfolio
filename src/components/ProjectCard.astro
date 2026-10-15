@@ -11,7 +11,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '') +
     <div><h3>{p.title}</h3><p class="role">{p.role.split(' & ').map((role, index) => <Fragment>{index > 0 && ' & '}<span class:list={{ 'role-developer': role === 'Game Developer', 'role-designer': role === 'Game Designer' }}>{role}</span></Fragment>)}</p></div>
   </div>
   <div class="project-media">
-    <video class="inline-video" src={asset(p.video)} controls playsinline preload="metadata" aria-label={`${p.title} — gameplay video`}>
+    <video class="inline-video" src={asset(p.video)} poster={asset(p.poster)} controls playsinline preload="auto" aria-label={`${p.title} — gameplay video`}>
     </video>
     <p class="video-error" role="alert" hidden>Video could not be loaded. Please try again.</p>
     <p class="video-status" role="status" hidden>Loading video…</p>

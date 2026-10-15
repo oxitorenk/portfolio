@@ -20,7 +20,7 @@ import '../styles/global.css';
   <div class="site-shell">
     <header class="site-header">
       <div class="identity"><span class="name">{profile.name}</span><span class="job">{profile.role}</span></div>
-      <nav aria-label="Social links">{[[profile.github, 'GitHub'], [profile.linkedin, 'LinkedIn'], [profile.email ? `mailto:${profile.email}` : '', 'Contact']].map(([url,label]) => url ? <a href={url}>{label} <span aria-hidden="true">↗</span></a> : <span class="social-placeholder" title="Link coming soon">{label} <span aria-hidden="true">↗</span><small>Coming soon</small></span>)}</nav>
+      <nav aria-label="Social links">{[[profile.github, 'GitHub'], [profile.linkedin, 'LinkedIn'], [profile.email ? `mailto:${profile.email}` : '', 'Contact']].map(([url,label]) => url ? <a href={url}>{label} <svg class="external-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12L12 4M4 4H12V12" /></svg></a> : <span class="social-placeholder" title="Link coming soon">{label} <svg class="external-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12L12 4M4 4H12V12" /></svg><small>Coming soon</small></span>)}</nav>
     </header>
     <main id="main">
       <section class="hero" aria-labelledby="hero-title"><h1 id="hero-title">Designing &amp;<br />Building Games</h1><p>{profile.description}</p></section>
@@ -31,7 +31,7 @@ import '../styles/global.css';
       <p class="disclaimer">Game titles and final key art belong to their publishers.</p>
       <section class="contact-section" aria-labelledby="contact-title">
         <h2 id="contact-title">Let’s talk.</h2>
-        <a href={`mailto:${profile.email}`}>{profile.email}<span aria-hidden="true"> ↗</span></a>
+        <a href={`mailto:${profile.email}`}>{profile.email}<svg class="external-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12L12 4M4 4H12V12" /></svg></a>
       </section>
     </footer>
   </div>
