@@ -22,7 +22,7 @@ export const profile = {
 export const projects: Project[] = [
   {
     slug: 'agent-hunt', title: 'Agent Hunt', role: 'Game Developer',
-    contribution: 'Joined after the initial prototype, developing gameplay and meta systems across iterations, integrating SDKs, fixing bugs, and polishing the experience.',
+    contribution: 'Joined after the initial prototype. Developed gameplay and meta systems across iterations, integrated SDKs, fixed bugs, and polished the experience.',
     featured: true,
     icon: 'images/agent-hunt-icon.webp', video: 'video/agent_hunt_gameplay.mp4', poster: 'images/agent-hunt-poster.webp',
     downloads: '100M+',
@@ -31,12 +31,20 @@ export const projects: Project[] = [
   },
   {
     slug: 'frontline-heroes', title: 'Frontline Heroes', role: 'Game Developer',
-    contribution: 'Built the initial prototype and developed gameplay and meta systems through subsequent iterations, including SDK integration, bug fixing, and polish.',
+    contribution: 'Built the initial prototype. Continued developing gameplay and meta systems in later iterations, including SDK integration, bug fixing, and polish.',
     featured: true,
     icon: 'images/frontline-heroes-icon.webp', video: 'video/frontline_gameplay.mp4', poster: 'images/frontline-heroes-poster.webp',
     downloads: '50M+',
     googlePlay: 'https://play.google.com/store/apps/details?id=com.GnarlyGameStudio.FrontlineHeroes',
     appStore: 'https://apps.apple.com/tr/app/frontline-heroes-army-games/id6478924604',
+  },
+  {
+    slug: 'sea-lords', title: 'Sea Lords', role: 'Game Developer',
+    contribution: 'Joined during the initial prototype, contributing to gameplay systems with a focus on combat. Continued working on progression systems in later iterations.',
+    featured: true,
+    icon: 'images/sea-lords-icon.webp', video: 'video/sea-lords-gameplay.mp4', poster: 'images/sea-lords-poster.webp',
+    downloads: '5M+',
+    appStore: 'https://apps.apple.com/tr/app/sea-lords/id1643423530',
   },
   {
     slug: 'battle-gears', title: 'Battle Gears', role: 'Game Developer & Game Designer',
